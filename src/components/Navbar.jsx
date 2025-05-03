@@ -47,18 +47,13 @@ export default function Header() {
           <input
             type="text"
             placeholder="Search for course..."
-            className="border px-3 py-1 rounded-md pl-10 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            className="border px-3 py-1 rounded-2xl pl-10 focus:outline-none focus:ring-1 focus:ring-blue-500"
           />
-          <FaSearch className="absolute left-3 top-2.5 text-gray-400" />
+          <FaSearch className="absolute right-2.5 top-2.5 text-gray-400" />
         </div>
-        <button className="bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700">
+        <button className="bg-blue-600 text-white p-2.5 rounded-full rounded hover:bg-blue-700 font-semibold">
           Sign In
         </button>
-        <img
-          src="https://i.pravatar.cc/40"
-          alt="User"
-          className="w-8 h-8 rounded-full"
-        />
       </div>
     </div>
   );

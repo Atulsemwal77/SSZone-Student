@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import img1 from '../assets/img1.png'
+import { MdLockOutline } from "react-icons/md";
 
 const coursesData = [
   {
@@ -13,7 +14,7 @@ const coursesData = [
   },
 ];
 
-const TabButton = ({ label, active, onClick }) => (
+const TabButton = ({ label, active, onClick}) => (
   <button
     className={`px-4 py-2 font-semibold ${
       active ? "border-b-2 border-blue-500 text-blue-600" : "text-gray-500"
@@ -24,7 +25,7 @@ const TabButton = ({ label, active, onClick }) => (
   </button>
 );
 
-const CourseCard = ({ data }) => (
+const CourseCard = ({ data, button, percent, showLockIcon }) => (
   <div className="bg-white p-4 rounded-lg shadow-md w-72">
     <div className="relative">
       <img src={data.image} alt="course" className="w-full h-40 object-cover rounded-md" />
@@ -49,15 +50,19 @@ const CourseCard = ({ data }) => (
       </div>
     </div>
     <div >
-    <p className="text-xs text-gray-400 mt-1"> Complete - 0% </p>
-     <input type="range" className="w-full" />
+    <div className="flex justify-between">
+      <p className="text-xs text-gray-400 mt-1"> Complete</p>
+      <p className="text-xs text-gray-400 mt-1">{percent}%</p>
     </div>
-    <div className="flex justify-between text-sm text-gray-600 mt-2">
+     <input type="range" className="w-full " />
+    </div>
+    <div className="flex gap-6 text-sm text-gray-600 mt-2">
       <span>📘 {data.lessons} Lesson</span>
       <span>⏱ {data.duration}</span>
     </div>
-    <button className="mt-3 w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition">
-      Start Now
+    <button className="mt-3 w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition flex justify-center items-center gap-2">
+      {button}
+      {showLockIcon && <MdLockOutline />}
     </button>
   </div>
 );
@@ -71,14 +76,26 @@ const App = () => {
         return (
           <div className="flex flex-wrap gap-4 mt-6">
             {coursesData.map((course, i) => (
-              <CourseCard key={i} data={course} />
+              <CourseCard key={i} data={course} button="Start Now" percent="0" />
             ))}
           </div>
         );
       case "Active":
-        return <div className="mt-6 text-gray-600">You are currently learning React Basics.</div>;
+        return (
+        <div className="flex flex-wrap gap-4 mt-6">
+        {coursesData.map((course, i) => (
+          <CourseCard key={i} data={course} button="Download Certificate" percent="88" showLockIcon={true}/>
+        ))}
+        </div>
+        )
       case "Completed":
-        return <div className="mt-6 text-gray-600">You have completed 2 courses.</div>;
+        return (
+          <div className="flex flex-wrap gap-4 mt-6">
+          {coursesData.map((course, i) => (
+            <CourseCard key={i} data={course} button="Download Certificate" percent="100"/>
+          ))}
+          </div>
+          )
       default:
         return null;
     }

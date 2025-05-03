@@ -63,7 +63,7 @@ const Overview = () => {
       </div>
 
       {/* Courses Enrolled Status (Placeholder) */}
-      <div className="bg-white p-6 rounded shadow">
+      {/* <div className="bg-white p-6 rounded shadow">
         <div className="flex justify-between items-center mb-4">
           <h3 className="font-semibold text-lg">Courses Enrolled Status</h3>
           <select className="border px-2 py-1 rounded">
@@ -75,7 +75,7 @@ const Overview = () => {
         <div className="h-40 bg-gray-100 rounded flex items-center justify-center text-gray-400">
           [Chart Placeholder]
         </div>
-      </div>
+      </div> */}
 
       <div className=" p-4">
       <h2 className="text-xl font-semibold mb-4">Recent Feedbacks</h2>
