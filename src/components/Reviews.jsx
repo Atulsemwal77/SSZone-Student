@@ -38,47 +38,49 @@ const reviews = [
 
 const Reviews = () => {
   return (
-    <div className="max-w-6xl mx-auto p-6">
+    <div className="max-w-6xl mx-auto p-4 sm:p-6">
       <h2 className="text-xl font-semibold mb-4">Reviews</h2>
-      <table className="w-full text-left border-collapse">
-        <thead>
-          <tr className="bg-blue-100">
-            <th className="py-3 px-4 font-medium text-gray-700">Student</th>
-            <th className="py-3 px-4 font-medium text-gray-700">Date</th>
-            <th className="py-3 px-4 font-medium text-gray-700">Feedback</th>
-          </tr>
-        </thead>
-        <tbody>
-          {reviews.map((review, index) => (
-            <tr
-              key={index}
-              className={index % 2 === 1 ? "bg-blue-50" : ""}
-            >
-              <td className="py-4 px-4">{review.student}</td>
-              <td className="py-4 px-4">{review.date}</td>
-              <td className="py-4 px-4">
-                <div className="mb-1">
-                  Course: <span className="font-medium">{review.course}</span>
-                </div>
-                <div className="flex items-center gap-1 text-yellow-500 text-sm">
-                  {[...Array(Math.floor(review.rating))].map((_, i) => (
-                    <FaStar key={i} />
-                  ))}
-                  {review.rating % 1 !== 0 && (
-                    <FaStar className="opacity-50" />
-                  )}
-                  <span className="text-gray-600 ml-2">
-                    ({String(review.reviewCount).padStart(2, "0")} Reviews)
-                  </span>
-                </div>
-                <div className="text-blue-600 font-medium text-sm mt-1">
-                  {review.comment}
-                </div>
-              </td>
+      <div className="overflow-x-auto bg-white shadow rounded-lg">
+        <table className="min-w-full text-left border-collapse">
+          <thead>
+            <tr className="bg-blue-100 text-sm sm:text-base">
+              <th className="py-3 px-4 font-medium text-gray-700 whitespace-nowrap">Student</th>
+              <th className="py-3 px-4 font-medium text-gray-700 whitespace-nowrap">Date</th>
+              <th className="py-3 px-4 font-medium text-gray-700 whitespace-nowrap">Feedback</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {reviews.map((review, index) => (
+              <tr
+                key={index}
+                className={index % 2 === 1 ? "bg-blue-50" : ""}
+              >
+                <td className="py-4 px-4 whitespace-nowrap">{review.student}</td>
+                <td className="py-4 px-4 whitespace-nowrap">{review.date}</td>
+                <td className="py-4 px-4 min-w-[200px]">
+                  <div className="mb-1 text-sm sm:text-base">
+                    Course: <span className="font-medium">{review.course}</span>
+                  </div>
+                  <div className="flex items-center gap-1 text-yellow-500 text-sm">
+                    {[...Array(Math.floor(review.rating))].map((_, i) => (
+                      <FaStar key={i} />
+                    ))}
+                    {review.rating % 1 !== 0 && (
+                      <FaStar className="opacity-50" />
+                    )}
+                    <span className="text-gray-600 ml-2">
+                      ({String(review.reviewCount).padStart(2, "0")} Reviews)
+                    </span>
+                  </div>
+                  <div className="text-blue-600 font-medium text-sm mt-1">
+                    {review.comment}
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

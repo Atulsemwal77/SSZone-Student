@@ -1,6 +1,4 @@
-
-
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import {
   MdDashboard,
@@ -10,127 +8,81 @@ import {
   MdSettings,
   MdLogout,
   MdPerson,
+  MdMenu,
+  MdClose,
 } from "react-icons/md";
 import { BiBookBookmark } from "react-icons/bi";
+import { FaRegHeart } from "react-icons/fa";
 
 export default function Dashboard() {
-  const linkClass = "flex items-center space-x-2 p-2 rounded hover:bg-blue-100";
-  const activeClass = "bg-blue-100 text-blue-600";
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
+
+  const linkClass =
+    "flex items-center space-x-2 p-2 rounded hover:bg-blue-100 transition-colors";
+  const activeClass = "bg-blue-100 text-blue-600 font-medium";
+
+  const navLinks = [
+    { to: "/", icon: <MdDashboard />, label: "Dashboard" },
+    { to: "/profile", icon: <MdPerson />, label: "My Profile" },
+    { to: "/enrollCourse", icon: <BiBookBookmark />, label: "Enroll Courses" },
+    { to: "/wishlist", icon: <FaRegHeart />, label: "Wishlist" },
+    { to: "/message", icon: <MdMessage />, label: "Messages" },
+    { to: "/review", icon: <MdRateReview />, label: "Reviews" },
+    { to: "/myQuiz", icon: <MdQuiz />, label: "My Quiz" },
+    { to: "/assignments", icon: <BiBookBookmark />, label: "Assignments" },
+    { isDivider: true },
+    { to: "/setting", icon: <MdSettings />, label: "Settings" },
+    { to: "/logout", icon: <MdLogout />, label: "Logout" },
+  ];
 
   return (
-    <div className=" min-h-screen bg-gray-100 font-sans ">
+    <div className="min-h-screen flex flex-col md:flex-row bg-gray-100 font-sans">
+      {/* Mobile Header */}
+      <div className="flex items-center justify-between bg-white p-4 shadow-md md:hidden">
+        {/* <h1 className="text-xl font-semibold">Dashboard</h1> */}
+        <button onClick={toggleSidebar}>
+          {sidebarOpen ? <MdClose size={20} /> : <MdMenu size={20} />}
+        </button>
+      </div>
+
       {/* Sidebar */}
-      <aside className="w-64 bg-white shadow p-6">
-        <nav className="space-y-2 text-gray-600">
-          <NavLink
-            to="/"
-            end
-            className={({ isActive }) =>
-              `${linkClass} ${isActive ? activeClass : ""}`
-            }
-          >
-            <MdDashboard />
-            <span>Dashboard</span>
-          </NavLink>
+      <aside
+  className={`fixed md:static top-[25px] left-0 h-full bg-white shadow p-6 w-64 z-50 transition-transform transform ${
+    sidebarOpen ? "translate-x-0" : "-translate-x-full"
+  } md:translate-x-0 md:block`}
+>
+  {/* Close button visible only on mobile */}
+  <div className="flex justify-end mb-4 md:hidden">
+    <button onClick={toggleSidebar} className="text-gray-600 hover:text-red-500">
+      <MdClose size={24} />
+    </button>
+  </div>
 
-          <NavLink
-            to="/profile"
-            className={({ isActive }) =>
-              `${linkClass} ${isActive ? activeClass : ""}`
-            }
-          >
-            <MdPerson />
-            <span>My Profile</span>
-          </NavLink>
+  <nav className="space-y-2 text-gray-600">
+    {navLinks.map((link, index) =>
+      link.isDivider ? (
+        <hr key={index} className="my-4" />
+      ) : (
+        <NavLink
+          key={link.to}
+          to={link.to}
+          end
+          className={({ isActive }) =>
+            `${linkClass} ${isActive ? activeClass : ""}`
+          }
+          onClick={() => setSidebarOpen(false)} // closes sidebar on link click (mobile)
+        >
+          {link.icon}
+          <span>{link.label}</span>
+        </NavLink>
+      )
+    )}
+  </nav>
+</aside>
 
-          <NavLink
-            to="/enrollCourse"
-            className={({ isActive }) =>
-              `${linkClass} ${isActive ? activeClass : ""}`
-            }
-          >
-            <BiBookBookmark />
-            <span>Enroll Courses</span>
-          </NavLink>
-
-          <NavLink
-            to="/wishlist"
-            className={({ isActive }) =>
-              `${linkClass} ${isActive ? activeClass : ""}`
-            }
-          >
-            <MdMessage />
-            <span>WishList</span>
-          </NavLink>
-
-          <NavLink
-            to="/message"
-            className={({ isActive }) =>
-              `${linkClass} ${isActive ? activeClass : ""}`
-            }
-          >
-            <BiBookBookmark />
-            <span>Message</span>
-          </NavLink>
-
-          <NavLink
-            to="/review"
-            className={({ isActive }) =>
-              `${linkClass} ${isActive ? activeClass : ""}`
-            }
-          >
-            <MdRateReview />
-            <span>Reviews</span>
-          </NavLink>
-
-          <NavLink
-            to="/myQuiz"
-            className={({ isActive }) =>
-              `${linkClass} ${isActive ? activeClass : ""}`
-            }
-          >
-            <MdQuiz />
-            <span>My Quiz </span>
-          </NavLink>
-
-          <NavLink
-            to="/assignments"
-            className={({ isActive }) =>
-              `${linkClass} ${isActive ? activeClass : ""}`
-            }
-          >
-            <BiBookBookmark />
-            <span>Assignment</span>
-          </NavLink>
-
-          <hr className="my-4" />
-
-          <NavLink
-            to="/setting"
-            className={({ isActive }) =>
-              `${linkClass} ${isActive ? activeClass : ""}`
-            }
-          >
-            <MdSettings />
-            <span>Setting</span>
-          </NavLink>
-
-          <NavLink
-            to="/logout"
-            className={({ isActive }) =>
-              `${linkClass} ${isActive ? activeClass : ""}`
-            }
-          >
-            <MdLogout />
-            <span>Logout</span>
-          </NavLink>
-        </nav>
-      </aside>
-
-      {/* Main content placeholder */}
-      <main className="flex-1 p-6 w-full">
-        {/* This is where nested routes will render via <Outlet /> in App.jsx */}
-      </main>
+      
     </div>
   );
 }

@@ -38,7 +38,7 @@ const Overview = () => {
 
       <p className="font-semibold text-lg mb-2">Summary</p>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6 ">
         <div className="bg-white p-4 rounded shadow flex items-center space-x-4">
         <div className="border w-10 h-10 rounded-full flex items-center justify-center bg-[#296AD2]"><FaBook className="text-white text-2xl" /></div>
           <div>
@@ -77,33 +77,35 @@ const Overview = () => {
         </div>
       </div> */}
 
-      <div className=" p-4">
+<div className="p-4 overflow-x-auto">
       <h2 className="text-xl font-semibold mb-4">Recent Feedbacks</h2>
 
-      {/* Header Row */}
-      <div className="flex font-medium bg-blue-100 p-2 rounded-t-md">
-        <div className="w-1/3 px-2">Course Name</div>
-        <div className="w-1/3 px-2">Enrolled</div>
-        <div className="w-1/3 px-2">Rating</div>
-      </div>
-
-      {/* Feedback Rows */}
-      {feedbacks.map((item, index) => (
-        <div
-          key={index}
-          className={`flex p-2 ${
-            index % 2 === 1 ? "bg-blue-50" : ""
-          } border-b`}
-        >
-          <div className="w-1/3 px-2">{item.course}</div>
-          <div className="w-1/3 px-2">{item.enrolled}</div>
-          <div className="w-1/3 px-2 flex items-center gap-1">
-            <FaStar className="text-yellow-400" />
-            {item.rating}
-          </div>
-        </div>
-      ))}
+      <table className="min-w-full table-auto bg-white rounded-md shadow">
+        <thead>
+          <tr className="bg-blue-100 text-left text-sm font-medium text-gray-700">
+            <th className="px-4 py-2">Course Name</th>
+            <th className="px-4 py-2">Enrolled</th>
+            <th className="px-4 py-2">Rating</th>
+          </tr>
+        </thead>
+        <tbody>
+          {feedbacks.map((item, index) => (
+            <tr
+              key={index}
+              className={index % 2 === 1 ? 'bg-blue-50' : 'bg-white'}
+            >
+              <td className="px-4 py-2">{item.course}</td>
+              <td className="px-4 py-2">{item.enrolled}</td>
+              <td className="px-4 py-2 flex items-center gap-1">
+                <FaStar className="text-yellow-400" />
+                {item.rating}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
+
     </>
   );
 };
